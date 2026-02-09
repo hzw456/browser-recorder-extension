@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser Recorder</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      width: 300px;
+      padding: 15px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #eee;
+    }
+    
+    h1 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .status {
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      font-size: 13px;
+    }
+    
+    .status.recording {
+      background: rgba(255, 68, 68, 0.2);
+      border: 1px solid #ff4444;
+    }
+    
+    .status.idle {
+      background: rgba(100, 100, 100, 0.2);
+      border: 1px solid #666;
+    }
+    
+    .controls {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+    
+    button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    #startBtn {
+      background: #4CAF50;
+      color: white;
+    }
+    
+    #startBtn:hover:not(:disabled) {
+      background: #45a049;
+    }
+    
+    #stopBtn {
+      background: #ff4444;
+      color: white;
+    }
+    
+    #stopBtn:hover:not(:disabled) {
+      background: #ff3333;
+    }
+    
+    #playBtn {
+      background: #2196F3;
+      color: white;
+    }
+    
+    #playBtn:hover:not(:disabled) {
+      background: #1976D2;
+    }
+    
+    .stats {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      font-size: 12px;
+    }
+    
+    .stats p {
+      margin: 4px 0;
+      color: #aaa;
+    }
+    
+    .stats span {
+      color: #fff;
+      font-weight: 600;
+    }
+    
+    .actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .secondary-btn {
+      padding: 8px 12px;
+      background: #444;
+      color: white;
+      font-size: 11px;
+    }
+    
+    .secondary-btn:hover:not(:disabled) {
+      background: #555;
+    }
+    
+    .divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 15px 0;
+    }
+    
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <h1>📝 Browser Recorder</h1>
+  
+  <div id="status" class="status idle">
+    <strong>Status:</strong> <span id="statusText">Ready</span>
+  </div>
+  
+  <div class="controls">
+    <button id="startBtn">Start Recording</button>
+    <button id="stopBtn" class="hidden">Stop</button>
+  </div>
+  
+  <div class="controls">
+    <button id="playBtn">▶️ Playback</button>
+  </div>
+  
+  <div class="stats">
+    <p>URL: <span id="url">-</span></p>
+    <p>Actions: <span id="actionCount">0</span></p>
+    <p>Duration: <span id="duration">0s</span></p>
+  </div>
+  
+  <div class="divider"></div>
+  
+  <div class="actions">
+    <button id="exportBtn" class="secondary-btn">Export JSON</button>
+    <button id="importBtn" class="secondary-btn">Import</button>
+    <button id="clearBtn" class="secondary-btn">Clear</button>
+  </div>
+  
+  <input type="file" id="importFile" accept=".json" style="display: none;">
+  
+  <script src="popup.js"></script>
+</body>
+</html>
