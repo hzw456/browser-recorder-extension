@@ -45,10 +45,13 @@ function stopRecording() {
   removeEventListeners();
   
   // 清除缓冲区
-  clearInterval(bufferFlushInterval);
+  if (bufferFlushInterval) {
+    clearInterval(bufferFlushInterval);
+    bufferFlushInterval = null;
+  }
   flushBuffer();
   
-  console.log('Content script: Recording stopped. Total actions:', actionBuffer.length);
+  console.log('Content script: Recording stopped. Total actions recorded');
   
   // 移除视觉指示器
   removeRecordingIndicator();

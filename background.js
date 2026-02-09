@@ -9,8 +9,17 @@ let recordingData = {
   actions: []
 };
 
-// 监听来自 popup 的消息
+// 监听来自 popup 和 content script 的消息
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  // 处理来自 content script 的录制数据
+  if (message.type === 'RECORDED_ACTIONS') {
+    if (message.actions && Array.isArray(message.actions)) {
+      recordingData.actions.push(...message.actions);
+    }
+    return;
+  }
+  
+  // 处理来自 popup 的命令
   if (message.type === 'START_RECORDING') {
     startRecording(sender.tab?.id);
   } else if (message.type === 'STOP_RECORDING') {

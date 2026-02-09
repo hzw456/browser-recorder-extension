@@ -144,10 +144,11 @@ function executeScroll(action) {
 
 function executeInput(action) {
   const element = findElement(action.selector);
-  if (element) {
+  if (element && element.tagName === 'INPUT') {
     // 模拟输入
     const event = new Event('input', { bubbles: true });
-    element.value = '*'.repeat(action.valueLength); // 使用占位符
+    const chars = 'a'.repeat(Math.min(action.valueLength, 20)); // 限制长度
+    element.value = chars;
     element.dispatchEvent(event);
   }
 }
